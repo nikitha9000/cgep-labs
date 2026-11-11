@@ -1,0 +1,54 @@
+
+name: GRC Security Validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-validation:
+    name: Terraform Format and Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: Check Terraform formatting
+        run: terraform fmt -check -recursive terraform/
+
+      - name: Initialize Terraform
+        working-directory: terraform/primitives/compliant-s3
+        run: terraform init -backend=false
+
+      - name: Validate Terraform
+        working-directory: terraform/primitives/compliant-s3
+        run: terraform validate
+
+  opa-validation:
+    name: OPA Policy Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup OPA
+        uses: open-policy-agent/setup-opa@v2
+        with:
+          version: latest
+
+      - name: Check OPA policy syntax
+        run: opa check policies/terraform/
+
+      - name: Run OPA policy tests
+        run: opa test policies/terraform/ -v
