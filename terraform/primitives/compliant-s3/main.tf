@@ -24,7 +24,13 @@ provider "aws" {
 resource "aws_s3_bucket" "logs" {
   bucket_prefix = "${var.project_name}-logs-"
 }
+resource "aws_s3_bucket_versioning" "logs" {
+  bucket = aws_s3_bucket.logs.id
 
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 resource "aws_s3_bucket_public_access_block" "logs" {
   bucket                  = aws_s3_bucket.logs.id
   block_public_acls       = true
@@ -69,7 +75,34 @@ resource "aws_s3_bucket_versioning" "primary" {
     status = "Enabled"
   }
 }
+resource "aws_s3_bucket_lifecycle_configuration" "primary" {
+  bucket = aws_s3_bucket.primary.id
 
+  rule {
+    id     = "abort-incomplete-multipart-uploads"
+    status = "Enabled"
+
+    filter {}
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
+resource "aws_s3_bucket_lifecycle_configuration" "logs" {
+  bucket = aws_s3_bucket.logs.id
+
+  rule {
+    id     = "abort-incomplete-multipart-uploads"
+    status = "Enabled"
+
+    filter {}
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
 resource "aws_s3_bucket_public_access_block" "primary" {
   bucket                  = aws_s3_bucket.primary.id
   block_public_acls       = true
