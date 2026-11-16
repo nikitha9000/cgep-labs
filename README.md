@@ -1,8 +1,8 @@
-GE-P Labs – GRC Engineering Portfolio
+# CGE-P Labs - GRC Engineering Portfolio
 
 
 
-Overview
+## Overview
 
 
 
@@ -10,170 +10,152 @@ This repository contains practical Governance, Risk, and Compliance (GRC) engine
 
 
 
-The projects demonstrate security governance, risk assessment, compliance documentation, Infrastructure as Code (IaC), security automation, policy enforcement, and evidence collection.
+The projects demonstrate security governance, risk assessment, compliance documentation, Infrastructure as Code (IaC), policy enforcement, automated testing, security monitoring design, and evidence generation.
 
 
 
-Project 1: AWS S3 Security Compliance
+## Project 1: AWS S3 Security Compliance
 
 
 
-Organization: TechNova Solutions (Fictional)
+**Organization:** TechNova Solutions (Fictional)
 
 
 
-Objective: Design a secure AWS S3 storage environment using Terraform and document its alignment with security and compliance requirements.
+**Objective:** Design a secure AWS S3 storage environment using Terraform and document its alignment with security and compliance requirements.
 
 
 
-Security Controls
+### Security Controls
 
 
 
-Restrict public access to S3 buckets.
+\- Restrict public access to S3 buckets.
 
+\- Enable AES-256 encryption at rest.
 
+\- Enable bucket versioning.
 
-Enable AES-256 encryption at rest.
+\- Configure server access logging.
 
+\- Apply consistent infrastructure tags.
 
+\- Restrict access log delivery permissions.
 
-Enable bucket versioning.
 
 
+### Technologies
 
-Configure server access logging.
 
 
+\- Terraform
 
-Apply consistent infrastructure tags.
+\- Amazon Web Services (AWS)
 
+\- Open Policy Agent (OPA/Rego)
 
+\- Git and GitHub
 
-Technologies
+\- GitHub Actions
 
+\- ISO/IEC 27001:2022
 
+\- NIST Cybersecurity Framework 2.0
 
-Terraform
+\- NIST SP 800-53 Revision 5
 
 
 
-Amazon Web Services (AWS)
+### GRC Documentation
 
 
 
-Git and GitHub
+\- Asset register
 
+\- Risk register
 
+\- Security control matrix
 
-ISO/IEC 27001:2022
+\- Gap assessment
 
+\- Evidence register
 
+\- Remediation plan
 
-NIST Cybersecurity Framework 2.0
+\- Control-to-code mapping
 
 
 
-GRC Documentation
+### Security Engineering
 
 
 
-Asset register
+\- Infrastructure as Code
 
+\- Policy as Code
 
+\- Terraform mock-provider tests
 
-Risk register
+\- Automated policy validation
 
+\- Checkov infrastructure security scanning
 
+\- GitHub Actions CI/CD
 
-Security control matrix
+\- AWS Config monitoring and detection design
 
+\- Automated local validation evidence
 
 
-Gap assessment
 
+### Validation Status
 
 
-Evidence register
 
+Local Terraform formatting, validation, mock-provider tests, OPA policy checks, OPA tests, and control mapping validation have passed.
 
 
-Remediation plan
 
+Local validation evidence is generated in:
 
 
-Engineering Roadmap
 
+`evidence/generated/local-validation-evidence.json`
 
 
-Infrastructure as Code
 
+GitHub Actions execution must be verified after pushing the changes.
 
 
-Policy as Code using OPA/Rego
 
+**AWS deployment and live monitoring have not been verified.** AWS access is currently unavailable.
 
 
-Automated security testing
 
+## Repository Structure
 
 
-GitHub Actions CI/CD
 
+\- `.github/workflows/` - CI/CD workflow
 
+\- `documentation/` - Control-to-code mapping
 
-Security monitoring and detection
+\- `evidence/` - Generated validation evidence
 
+\- `lab-01/` - GRC assessment documentation
 
+\- `monitoring/` - Security monitoring design
 
-Automated compliance evidence
+\- `policies/` - OPA security policies
 
+\- `scripts/` - Validation and evidence generation scripts
 
+\- `terraform/` - Secure S3 infrastructure
 
-OSCAL documentation
 
 
+## Disclaimer
 
-Validation
 
 
-
-Terraform formatting and configuration validation have been completed successfully.
-
-
-
-Operational AWS deployment and security control effectiveness require separate verification.
-
-
-
-Repository Structure
-
-
-
-cgep-labs/
-
-├── lab-01/
-
-├── terraform/
-
-├── policies/
-
-├── tests/
-
-├── monitoring/
-
-├── evidence/
-
-├── oscal/
-
-├── scripts/
-
-└── .github/workflows/
-
-
-
-Disclaimer
-
-
-
-This repository is an educational GRC engineering portfolio. Framework mappings indicate intended alignment and do not constitute certification, formal audit assurance, or proof of regulatory compliance.
+This is an educational GRC engineering portfolio. Framework mappings indicate intended alignment or partial support and do not constitute certification, formal audit assurance, or proof of regulatory compliance.

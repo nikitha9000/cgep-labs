@@ -1,0 +1,57 @@
+﻿{
+    "evidence_type":  "local_validation",
+    "generated_at":  "2026-11-16T08:32:21.4135749Z",
+    "repository":  "cgep-labs",
+    "execution_environment":  "Local Windows PowerShell",
+    "aws_deployment_verified":  false,
+    "aws_monitoring_verified":  false,
+    "checks":  [
+                   {
+                       "name":  "Terraform formatting",
+                       "command":  "terraform fmt -check -recursive terraform/",
+                       "status":  "PASS",
+                       "details":  "Formatting check passed.",
+                       "checked_at":  "2026-11-16T08:32:18.3216491Z"
+                   },
+                   {
+                       "name":  "Terraform validation",
+                       "command":  "terraform validate",
+                       "status":  "PASS",
+                       "details":  "Configuration is valid.",
+                       "checked_at":  "2026-11-16T08:32:20.0030328Z"
+                   },
+                   {
+                       "name":  "Terraform tests",
+                       "command":  "terraform test",
+                       "status":  "PASS",
+                       "details":  "Mock-provider tests passed; this does not verify deployed AWS resources.",
+                       "checked_at":  "2026-11-16T08:32:21.3018814Z"
+                   },
+                   {
+                       "name":  "OPA policy check",
+                       "command":  "opa check policies/terraform/",
+                       "status":  "PASS",
+                       "details":  "OPA policy syntax check passed.",
+                       "checked_at":  "2026-11-16T08:32:21.3511842Z"
+                   },
+                   {
+                       "name":  "OPA policy tests",
+                       "command":  "opa test policies/terraform/ -v",
+                       "status":  "PASS",
+                       "details":  "OPA policy tests passed.",
+                       "checked_at":  "2026-11-16T08:32:21.3951324Z"
+                   },
+                   {
+                       "name":  "Control mapping validation",
+                       "command":  "scripts/validate-control-mapping.ps1",
+                       "status":  "PASS",
+                       "details":  "Control mapping validator completed successfully.",
+                       "checked_at":  "2026-11-16T08:32:21.4135749Z"
+                   }
+               ],
+    "summary":  {
+                    "not_run":  0,
+                    "failed":  0,
+                    "passed":  6
+                }
+}
