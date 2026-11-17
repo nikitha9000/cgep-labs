@@ -28,12 +28,18 @@ function Add-Check {
 # Check Terraform formatting
 Push-Location $root
 try {
-    $result = terraform fmt -check -recursive terraform/ 2>&1
-    if ($LASTEXITCODE -eq 0) {
+    $result = & terraform fmt -check -recursive terraform/ 2>&1
+    $exitCode = $LASTEXITCODE
+
+    if ($exitCode -eq 0) {
         Add-Check "Terraform formatting" "terraform fmt -check -recursive terraform/" "PASS" "Formatting check passed."
     }
     else {
-        Add-Check "Terraform formatting" "terraform fmt -check -recursive terraform/" "FAIL" ($result -join "`n")
+        $details = ($result | Out-String).Trim()
+        if ([string]::IsNullOrWhiteSpace($details)) {
+            $details = "Terraform formatting failed with exit code $exitCode and returned no output."
+        }
+        Add-Check "Terraform formatting" "terraform fmt -check -recursive terraform/" "FAIL" $details
     }
 }
 catch {
@@ -47,12 +53,18 @@ finally {
 $module = Join-Path $root "terraform/primitives/compliant-s3"
 Push-Location $module
 try {
-    $result = terraform validate 2>&1
-    if ($LASTEXITCODE -eq 0) {
+    $result = & terraform validate 2>&1
+    $exitCode = $LASTEXITCODE
+
+    if ($exitCode -eq 0) {
         Add-Check "Terraform validation" "terraform validate" "PASS" "Configuration is valid."
     }
     else {
-        Add-Check "Terraform validation" "terraform validate" "FAIL" ($result -join "`n")
+        $details = ($result | Out-String).Trim()
+        if ([string]::IsNullOrWhiteSpace($details)) {
+            $details = "Terraform validation failed with exit code $exitCode and returned no output."
+        }
+        Add-Check "Terraform validation" "terraform validate" "FAIL" $details
     }
 }
 catch {
@@ -65,12 +77,18 @@ finally {
 # Check Terraform mocked tests
 Push-Location $module
 try {
-    $result = terraform test 2>&1
-    if ($LASTEXITCODE -eq 0) {
+    $result = & terraform test 2>&1
+    $exitCode = $LASTEXITCODE
+
+    if ($exitCode -eq 0) {
         Add-Check "Terraform tests" "terraform test" "PASS" "Mock-provider tests passed; this does not verify deployed AWS resources."
     }
     else {
-        Add-Check "Terraform tests" "terraform test" "FAIL" ($result -join "`n")
+        $details = ($result | Out-String).Trim()
+        if ([string]::IsNullOrWhiteSpace($details)) {
+            $details = "Terraform tests failed with exit code $exitCode and returned no output."
+        }
+        Add-Check "Terraform tests" "terraform test" "FAIL" $details
     }
 }
 catch {
