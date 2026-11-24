@@ -108,9 +108,17 @@ jobs:
         shell: pwsh
         run: |
           $report = Get-Content .\evidence\generated\local-validation-evidence.json -Raw | ConvertFrom-Json
+
+          Write-Host "Evidence summary:"
+          Write-Host "Passed: $($report.summary.passed)"
+          Write-Host "Failed: $($report.summary.failed)"
+          Write-Host "Not run: $($report.summary.not_run)"
+
           if ($report.summary.failed -gt 0 -or $report.summary.not_run -gt 0) {
               throw "Evidence validation contains failed or unrun checks."
           }
+
+          Write-Host "Evidence validation passed."
 
       - name: Upload evidence artifact
         if: always()
