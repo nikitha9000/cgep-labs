@@ -97,7 +97,53 @@ catch {
 finally {
     Pop-Location
 }
+# Validate monitoring documentation and traceability
+$monitoringFile = Join-Path $root "monitoring/s3-monitoring-design.md"
+$controlMappingFile = Join-Path $root "documentation/control-to-code.md"
 
+try {
+    $missingMonitoring = @()
+    $missingMapping = @()
+
+    $monitoringIds = @("MON-01", "MON-02", "MON-03", "MON-04")
+
+    if (Test-Path $monitoringFile) {
+        $monitoringContent = Get-Content $monitoringFile -Raw
+
+        foreach ($id in $monitoringIds) {
+            if ($monitoringContent -notmatch [regex]::Escape($id)) {
+                $missingMonitoring += $id
+            }
+        }
+    }
+    else {
+        $missingMonitoring = $monitoringIds
+    }
+
+    if (Test-Path $controlMappingFile) {
+        $mappingContent = Get-Content $controlMappingFile -Raw
+
+        foreach ($id in $monitoringIds) {
+            if ($mappingContent -notmatch [regex]::Escape($id)) {
+                $missingMapping += $id
+            }
+        }
+    }
+    else {
+        $missingMapping = $monitoringIds
+    }
+
+    if ($missingMonitoring.Count -eq 0 -and $missingMapping.Count -eq 0) {
+        Add-Check "Monitoring documentation validation" "Validate MON-01 through MON-04 in monitoring design and control mapping" "PASS" "All four monitoring IDs are documented in both files. Live AWS monitoring deployment remains unverified."
+    }
+    else {
+        $details = "Missing monitoring design IDs: $($missingMonitoring -join ', '); Missing control mapping IDs: $($missingMapping -join ', ')"
+        Add-Check "Monitoring documentation validation" "Validate MON-01 through MON-04 in monitoring design and control mapping" "FAIL" $details
+    }
+}
+catch {
+    Add-Check "Monitoring documentation validation" "Validate MON-01 through MON-04 in monitoring design and control mapping" "NOT_RUN" $_.Exception.Message
+}
 # Check OPA policy syntax
 $policyDir = Join-Path $root "policies/terraform"
 Push-Location $root

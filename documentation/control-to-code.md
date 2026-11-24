@@ -668,25 +668,17 @@ Reference: NIST Special Publication 800-53 Revision 5, Security and Privacy Cont
 
 ## 10. Monitoring-to-Control Traceability
 
+The monitoring design defines proposed AWS Config detection mechanisms for identifying insecure S3 bucket configurations and tracking compliance status.
 
-
-The monitoring design defines proposed AWS Config detection rules for identifying public S3 bucket access.
-
-
-
-| Monitoring ID | Detection Rule | Related Control | NIST SP 800-53 Rev. 5 | Detection Purpose | Implementation Status |
+| Monitoring ID | Detection Rule / Mechanism | Related Control | NIST SP 800-53 Rev. 5 | Detection Purpose | Implementation Status |
 |---|---|---|---|---|---|
 | MON-01 | S3_BUCKET_PUBLIC_READ_PROHIBITED | C01 | AC-3 | Detect prohibited public read access to S3 buckets | Designed; AWS deployment pending |
 | MON-02 | S3_BUCKET_PUBLIC_WRITE_PROHIBITED | C01 | AC-3 | Detect prohibited public write access to S3 buckets | Designed; AWS deployment pending |
-
-
+| MON-03 | AWS Config Configuration Recorder | C06, C03, C04 | CM-3, AU-6 | Record supported S3 configuration changes for investigation and audit | Designed; recording not deployed or verified |
+| MON-04 | AWS Config Compliance Evaluation | C01–C06 | CA-7 | Evaluate resource compliance against configured AWS Config rules and track compliance status | Designed; evaluation not deployed or verified |
 
 **Monitoring design reference:** `monitoring/s3-monitoring-design.md`
 
-
-
-**Evidence limitation:** These monitoring rules are documented as a proposed design. AWS Config deployment, live rule evaluation, alert delivery, and operational response have not been verified because AWS access is unavailable.
-
-
+**Evidence limitation:** These monitoring mechanisms are documented as a proposed design. AWS Config deployment, configuration recording, live rule evaluation, alert delivery, and operational response have not been verified because live AWS deployment has not been performed.
 
 The monitoring design must be reviewed whenever the related Terraform controls, policies, or security requirements change.

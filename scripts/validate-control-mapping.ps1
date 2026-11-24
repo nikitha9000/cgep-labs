@@ -127,12 +127,18 @@ foreach ($assertion in $testAssertions) {
         $errors += "Terraform test is missing expected coverage: $assertion"
     }
 }
+
+
 # Verify monitoring design and control traceability.
 $monitoringAssertions = @(
     "S3_BUCKET_PUBLIC_READ_PROHIBITED",
     "S3_BUCKET_PUBLIC_WRITE_PROHIBITED",
     "MON-01",
-    "MON-02"
+    "MON-02",
+    "MON-03",
+    "MON-04",
+    "AWS Config Configuration recording",
+    "AWS Config Compliance Evaluation"
 )
 
 foreach ($assertion in $monitoringAssertions) {
@@ -141,7 +147,7 @@ foreach ($assertion in $monitoringAssertions) {
     }
 }
 
-# Verify monitoring rules map to C01 and NIST AC-3.
+# Verify MON-01 and MON-02 map to C01 and NIST AC-3.
 if ($mapping -notmatch '(?m)^\| MON-01 \|.*\| C01 \| AC-3 \|') {
     $errors += "MON-01 mapping to C01 and AC-3 is missing."
 }
@@ -150,22 +156,29 @@ if ($mapping -notmatch '(?m)^\| MON-02 \|.*\| C01 \| AC-3 \|') {
     $errors += "MON-02 mapping to C01 and AC-3 is missing."
 }
 
-Write-Host "Monitoring design and rule identifiers verified."
-Write-Host "MON-01 and MON-02 traceability to C01 and AC-3 verified."
-# Report results.
+# Verify MON-03 and MON-04 have traceability entries.
+if ($mapping -notmatch '(?m)^\| MON-03 \|') {
+    $errors += "MON-03 traceability mapping is missing."
+}
+
+if ($mapping -notmatch '(?m)^\| MON-04 \|') {
+    $errors += "MON-04 traceability mapping is missing."
+}
+
+# Report validation results.
 if ($errors.Count -gt 0) {
     Write-Host "`nCONTROL MAPPING VALIDATION FAILED" -ForegroundColor Red
 
     foreach ($errorMessage in $errors) {
-        Write-Host "- $errorMessage" -ForegroundColor Red
+        Write-Host " - $errorMessage" -ForegroundColor Red
     }
 
     exit 1
 }
 
 Write-Host "`nCONTROL MAPPING VALIDATION PASSED" -ForegroundColor Green
-Write-Host "Six internal control identifiers verified."
-Write-Host "Seven NIST control references verified."
-Write-Host "Seven Terraform resource declarations and documentation references verified."
-Write-Host "OPA public-access and encryption enforcement references verified."
-Write-Host "Terraform tests cover both buckets, versioning and logging."
+Write-Host "Six internal controls verified."
+Write-Host "NIST references verified."
+Write-Host "Terraform declarations and documentation verified."
+Write-Host "OPA enforcement and test coverage verified."
+Write-Host "MON-01 through MON-04 monitoring traceability verified."

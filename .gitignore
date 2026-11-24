@@ -24,3 +24,8 @@ credentials
 # Operating system files
 Thumbs.db
 Desktop.ini
+
+# Python virtual environments
+.venv/
+venv/
+.venv-checkov/
