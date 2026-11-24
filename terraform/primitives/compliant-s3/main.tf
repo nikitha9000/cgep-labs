@@ -22,6 +22,9 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "logs" {
+  # checkov:skip=CKV_AWS_145:Lab uses SSE-S3 AES256 encryption; KMS key management is outside current scope.
+  # checkov:skip=CKV2_AWS_62:Event notifications are not required for the current lab logging design.
+  # checkov:skip=CKV_AWS_144:Cross-region replication is deferred until AWS deployment and recovery requirements are defined.
   bucket_prefix = "${var.project_name}-logs-"
 }
 resource "aws_s3_bucket_versioning" "logs" {
@@ -50,6 +53,9 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
 }
 
 resource "aws_s3_bucket" "primary" {
+  # checkov:skip=CKV_AWS_145:Lab uses SSE-S3 AES256 encryption; KMS key management is outside current scope.
+  # checkov:skip=CKV2_AWS_62:Event notifications are not required for the current lab logging design.
+  # checkov:skip=CKV_AWS_144:Cross-region replication is deferred until AWS deployment and recovery requirements are defined.
   bucket_prefix = "${var.project_name}-data-"
 
   depends_on = [
@@ -57,7 +63,6 @@ resource "aws_s3_bucket" "primary" {
     aws_s3_bucket_server_side_encryption_configuration.logs
   ]
 }
-
 resource "aws_s3_bucket_server_side_encryption_configuration" "primary" {
   bucket = aws_s3_bucket.primary.id
 

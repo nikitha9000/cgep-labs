@@ -1,6 +1,6 @@
 ﻿{
     "evidence_type":  "local_validation",
-    "generated_at":  "2026-11-24T07:04:28.2863898Z",
+    "generated_at":  "2026-11-24T08:23:57.2996294Z",
     "repository":  "cgep-labs",
     "execution_environment":  "Local Windows PowerShell",
     "aws_deployment_verified":  false,
@@ -11,49 +11,49 @@
                        "command":  "terraform fmt -check -recursive terraform/",
                        "status":  "PASS",
                        "details":  "Formatting check passed.",
-                       "checked_at":  "2026-11-24T07:04:25.1330925Z"
+                       "checked_at":  "2026-11-24T08:23:53.7097767Z"
                    },
                    {
                        "name":  "Terraform validation",
                        "command":  "terraform validate",
                        "status":  "PASS",
                        "details":  "Configuration is valid.",
-                       "checked_at":  "2026-11-24T07:04:26.8232450Z"
+                       "checked_at":  "2026-11-24T08:23:55.6167223Z"
                    },
                    {
                        "name":  "Terraform tests",
                        "command":  "terraform test",
                        "status":  "PASS",
                        "details":  "Mock-provider tests passed; this does not verify deployed AWS resources.",
-                       "checked_at":  "2026-11-24T07:04:28.1431757Z"
+                       "checked_at":  "2026-11-24T08:23:57.1336378Z"
                    },
                    {
                        "name":  "Monitoring documentation validation",
                        "command":  "Validate MON-01 through MON-04 in monitoring design and control mapping",
                        "status":  "PASS",
                        "details":  "All four monitoring IDs are documented in both files. Live AWS monitoring deployment remains unverified.",
-                       "checked_at":  "2026-11-24T07:04:28.1630146Z"
+                       "checked_at":  "2026-11-24T08:23:57.1507268Z"
                    },
                    {
                        "name":  "OPA policy check",
                        "command":  "opa check policies/terraform/",
                        "status":  "PASS",
                        "details":  "OPA policy syntax check passed.",
-                       "checked_at":  "2026-11-24T07:04:28.2089752Z"
+                       "checked_at":  "2026-11-24T08:23:57.2069515Z"
                    },
                    {
                        "name":  "OPA policy tests",
                        "command":  "opa test policies/terraform/ -v",
                        "status":  "PASS",
                        "details":  "OPA policy tests passed.",
-                       "checked_at":  "2026-11-24T07:04:28.2547784Z"
+                       "checked_at":  "2026-11-24T08:23:57.2596758Z"
                    },
                    {
                        "name":  "Control mapping validation",
                        "command":  "scripts/validate-control-mapping.ps1",
                        "status":  "PASS",
                        "details":  "Control mapping validator completed successfully.",
-                       "checked_at":  "2026-11-24T07:04:28.2863898Z"
+                       "checked_at":  "2026-11-24T08:23:57.2916043Z"
                    }
                ],
     "summary":  {
